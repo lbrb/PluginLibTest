@@ -40,25 +40,13 @@ public class MainActivity extends Activity {
         }
     }
 
-
-    public void btnClick(View view) {
-        try {
-            PluginBase.init(MainActivity.this);
-            Thread.sleep(1000);
-            UploadLog uploadLog = new UploadLog();
-            uploadLog.upload(MainActivity.this);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
     public void deleteLog(View view) {
         UploadLog uploadLog = new UploadLog();
         uploadLog.upload(MainActivity.this);
     }
 
     public void addLog(View view) {
-        PluginBase.init(MainActivity.this);
+        new PluginBase().init(MainActivity.this);
     }
 
     public void clearSp(View view) {
