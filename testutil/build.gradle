@@ -45,3 +45,73 @@ dependencies {
 //已有
 
 
+
+/******************plugin_base auto-add start***************/
+
+uploadArchives{
+    configuration = configurations.archives
+    repositories {
+        mavenDeployer {
+
+            snapshotRepository(url: "http://127.0.0.1:8081/nexus/content/repositories/snapshots/") {
+                authentication(userName: 'admin', password: 'admin123')
+            }
+
+            repository(url: 'http://127.0.0.1:8081/nexus/content/repositories/releases/') {
+                authentication(userName: 'admin', password: 'admin123')
+            }
+
+            pom.project{
+                version '1.1.2-SNAPSHOT'
+                artifactId 'PluginName'
+                groupId 'com.vivo.plugins'
+                packaging 'aar'
+                description 'com.vivo.plugins.PluginName:1.1.2-SNAPSHOT'
+            }
+        }
+    }
+}
+
+task updateVersion << {
+    println 'begin update version'
+
+    def versionFileDir = "E:/test_projects/TestMavenLib/testutil/src/main/java/com/vivo/plugins/PluginName/PluginBase.java"
+    println versionFileDir
+
+    //replace build time
+    def oldBuildTimeStr = findLineStr(versionFileDir, "PLUGIN_BUILD_DATE =")
+    def newBuildTimeStr = "    private static final String PLUGIN_BUILD_DATE = \"" + new Date().format("yyyy-MM-dd HH:mm:ss") + "\";"
+    //replace commit id
+    def gitCommitId = 'git rev-parse --short HEAD'.execute().text.trim()
+    def oldCommitIdStr = findLineStr(versionFileDir, "PLUGIN_BUILD_COMMIT_ID =")
+    def newCommitIdStr = "    private static final String PLUGIN_BUILD_COMMIT_ID = \"" + gitCommitId + "\";"
+
+    def updatedContent = new File(versionFileDir).getText('UTF-8')
+            .replaceAll(oldBuildTimeStr, newBuildTimeStr)
+            .replaceAll(oldCommitIdStr, newCommitIdStr)
+    new File(versionFileDir).write(updatedContent, 'UTF-8')
+}
+def static findLineStr(path, value) {
+    def readerString = ""
+    new File(path).withReader('UTF-8') { reader ->
+        reader.eachLine {
+            if (it.contains(value)) {
+                readerString <<= it
+                return readerString
+            }
+        }
+        return readerString
+    }
+}
+
+//before build
+preBuild.dependsOn updateVersion
+
+//after build
+gradle.buildFinished {
+    def versionFileDir = "E:/test_projects/TestMavenLib/testutil/src/main/java/com/vivo/plugins/PluginName/PluginBase.java"
+    ('git checkout ' + versionFileDir).execute()
+    println "clean version file:" + versionFileDir
+}
+
+/******************plugin_base auto-add end***************/

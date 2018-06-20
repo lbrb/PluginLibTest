@@ -11,6 +11,7 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Environment;
+import android.util.Log;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -23,11 +24,12 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public final class PluginBase {
+    private final static String TAG = PluginBase.class.getCanonicalName();
     private static final String PLUGIN_NAME = "PluginName";
     private static final String PLUGIN_VERSION_NAME = "1.1.2-SNAPSHOT";
     private static final int PLUGIN_VERSION_CODE = 112;
-    private static final String PLUGIN_BUILD_DATE = "1970-01-01 00:00:01";
-    private static final String PLUGIN_BUILD_COMMIT_ID = "db93dfc";
+    private static final String PLUGIN_BUILD_DATE = "2018-06-20 14:42:51";
+    private static final String PLUGIN_BUILD_COMMIT_ID = "ed20077";
     public static void init(final Context context){
 
         new Thread(new Runnable() {
@@ -110,9 +112,10 @@ public final class PluginBase {
             fileLock = fileOutputStream.getChannel().tryLock();
 
             if (fileLock != null){
-                String content = ","+jsonObject.toString();
+                String content = "##"+jsonObject.toString();
                 fileOutputStream.write(content.getBytes());
                 fileOutputStream.flush();
+                Log.d(TAG, "writeStr2File: "+content);
                 return true;
             }
             return false;
@@ -161,11 +164,11 @@ public final class PluginBase {
     }
 
     private static boolean isAlreadySavedWeek(Context context){
-        SharedPreferences sharedPreferences = context.getSharedPreferences("PluginBase", Context.MODE_PRIVATE);
-        boolean alreadySaved = sharedPreferences.getBoolean(getWeek(), false);
-        if (alreadySaved){
-            return true;
-        }
+//        SharedPreferences sharedPreferences = context.getSharedPreferences("PluginBase", Context.MODE_PRIVATE);
+//        boolean alreadySaved = sharedPreferences.getBoolean(getWeek(), false);
+//        if (alreadySaved){
+//            return true;
+//        }
         return false;
     }
     

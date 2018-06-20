@@ -19,8 +19,19 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="test"
-        android:onClick="btnClick"/>
+        android:text="deleteLog"
+        android:onClick="deleteLog"/>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="addLog"
+        android:onClick="addLog"/>
+
+    <Button
+        android:text="clear SP"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="clearSp"/>
 
 
 </LinearLayout>

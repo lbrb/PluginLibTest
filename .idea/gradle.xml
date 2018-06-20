@@ -10,6 +10,7 @@
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/testutil" />
+            <option value="$PROJECT_DIR$/upload_log_lib" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />

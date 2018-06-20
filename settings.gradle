@@ -1,1 +1,1 @@
-include ':app', ':testutil'
+include ':app', ':testutil', ':upload_log_lib'
