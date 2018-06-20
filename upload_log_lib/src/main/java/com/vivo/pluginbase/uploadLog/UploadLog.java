@@ -19,7 +19,7 @@ import java.net.URL;
 
 public class UploadLog {
     private static final String TAG = UploadLog.class.getCanonicalName();
-    private static final String sUrlStr = "http://pluginstat.vivo.com.cn/userOperationLog";
+    private static final String sUrlStr = "pluginstat.vivo.com.cn/pluginInfoLog?origin=1";
 
     public void upload(Context context) {
         uploadReal(context);
