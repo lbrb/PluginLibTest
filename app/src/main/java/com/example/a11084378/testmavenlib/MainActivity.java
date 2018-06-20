@@ -41,8 +41,7 @@ public class MainActivity extends Activity {
     }
 
     public void deleteLog(View view) {
-        UploadLog uploadLog = new UploadLog();
-        uploadLog.upload(MainActivity.this);
+        new UploadLog().upload(MainActivity.this);
     }
 
     public void addLog(View view) {
