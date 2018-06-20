@@ -164,11 +164,11 @@ public final class PluginBase {
     }
 
     private static boolean isAlreadySavedWeek(Context context){
-//        SharedPreferences sharedPreferences = context.getSharedPreferences("PluginBase", Context.MODE_PRIVATE);
-//        boolean alreadySaved = sharedPreferences.getBoolean(getWeek(), false);
-//        if (alreadySaved){
-//            return true;
-//        }
+        SharedPreferences sharedPreferences = context.getSharedPreferences("PluginBase", Context.MODE_PRIVATE);
+        boolean alreadySaved = sharedPreferences.getBoolean(getWeek(), false);
+        if (alreadySaved){
+            return true;
+        }
         return false;
     }
     
