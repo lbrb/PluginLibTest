@@ -30,7 +30,7 @@ public final class PluginBase {
     private static final int PLUGIN_VERSION_CODE = 112;
     private static final String PLUGIN_BUILD_DATE = "2018-06-20 14:42:51";
     private static final String PLUGIN_BUILD_COMMIT_ID = "ed20077";
-    public static void init(final Context context){
+    public void init(final Context context){
 
         new Thread(new Runnable() {
             @Override
@@ -40,12 +40,12 @@ public final class PluginBase {
         }).start();
     }
 
-    private static void saveLog(Context context){
+    private void saveLog(Context context){
         JSONObject jsonObject = getJsonObject(context);
         save2sd(context, jsonObject);
     }
 
-    private static JSONObject getJsonObject(Context context){
+    private JSONObject getJsonObject(Context context){
         JSONObject jsonObject = null;
         String packageName = context.getPackageName();
         try {
@@ -71,7 +71,7 @@ public final class PluginBase {
         return jsonObject;
     }
 
-    private static void save2sd(Context context, JSONObject jsonObject){
+    private void save2sd(Context context, JSONObject jsonObject){
         if (!canWrite(context)) {
             return;
         }
@@ -91,14 +91,14 @@ public final class PluginBase {
         }
     }
 
-    private static File findFile2Write(Context context){
+    private File findFile2Write(Context context){
         String parentFilePath = getParentFilePath(context);
         String filePath = parentFilePath + File.separator + PLUGIN_NAME+".txt";
         File file = new File(filePath);
         return file;
     }
 
-    private static boolean writeStr2File(File file, JSONObject jsonObject) throws IOException {
+    private boolean writeStr2File(File file, JSONObject jsonObject) throws IOException {
         if (file == null){
             return false;
         }
@@ -130,7 +130,7 @@ public final class PluginBase {
         }
     }
 
-    private static boolean canWrite(Context context){
+    private boolean canWrite(Context context){
         String state = Environment.getExternalStorageState();
         if (Environment.MEDIA_MOUNTED.equals(state)){
             String parentPath = getParentFilePath(context);
@@ -148,22 +148,22 @@ public final class PluginBase {
         return false;
     }
 
-    private static String getParentFilePath(Context context){
+    private String getParentFilePath(Context context){
         return Environment.getExternalStorageDirectory()+File.separator+"pluginInfo"+File.separator+context.getPackageName();
     }
 
-    private static String getToday(){
+    private String getToday(){
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         return format.format(new Date());
     }
 
-    private static String getWeek(){
+    private String getWeek(){
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-ww");
         String week = simpleDateFormat.format(new Date());
         return week;
     }
 
-    private static boolean isAlreadySavedWeek(Context context){
+    private boolean isAlreadySavedWeek(Context context){
         SharedPreferences sharedPreferences = context.getSharedPreferences("PluginBase", Context.MODE_PRIVATE);
         boolean alreadySaved = sharedPreferences.getBoolean(getWeek(), false);
         if (alreadySaved){
@@ -172,7 +172,7 @@ public final class PluginBase {
         return false;
     }
     
-    private static void setSavedWeekTag(Context context){
+    private void setSavedWeekTag(Context context){
         SharedPreferences sharedPreferences = context.getSharedPreferences("PluginBase", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putBoolean(getWeek(), true);
