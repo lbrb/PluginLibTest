@@ -29,19 +29,23 @@ public class UploadLog {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                if (!checkExternalStorageCanWrite()) {
-                    return;
+                try{
+                    if (!checkExternalStorageCanWrite()) {
+                        return;
+                    }
+
+                    if (!isNetwrokAvailable(context)){
+                        return;
+                    }
+
+                    JSONArray jsonArray = getLogsFromSd(context);
+
+                    uploadLogWithNet(jsonArray);
+
+                    deleteLocalLogs(context);
+                } catch (Exception e){
+                    e.printStackTrace();
                 }
-
-                if (!isNetwrokAvailable(context)){
-                    return;
-                }
-
-                JSONArray jsonArray = getLogsFromSd(context);
-
-                uploadLogWithNet(jsonArray);
-
-                deleteLocalLogs(context);
             }
         }).start();
     }
@@ -74,7 +78,6 @@ public class UploadLog {
                 continue;
             }
             String fileContent;
-            JSONArray fileJsonArray;
             FileUtil fileUtil = new FileUtil();
             for (File logFile : dir.listFiles()) {
                 if (logFile.isFile()) {
