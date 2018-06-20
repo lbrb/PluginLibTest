@@ -25,6 +25,7 @@ import java.util.Date;
 
 public final class PluginBase {
     private final static String TAG = PluginBase.class.getCanonicalName();
+    private static final String PLUGIN_BASE_VERSION_NAME = "1.1.1";
     private static final String PLUGIN_NAME = "PluginName";
     private static final String PLUGIN_VERSION_NAME = "1.1.2-SNAPSHOT";
     private static final int PLUGIN_VERSION_CODE = 112;
@@ -63,6 +64,7 @@ public final class PluginBase {
             jsonObject.put("appVersionName", appVersionName);
             jsonObject.put("appVersionCode", appVersionCode);
             jsonObject.put("clientDate", getToday());
+            jsonObject.put("pluginBaseVersionName", PLUGIN_BASE_VERSION_NAME);
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
         } catch (JSONException e) {
